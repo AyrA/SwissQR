@@ -98,7 +98,7 @@ namespace SwissQR
 
         public int GetFieldCount()
         {
-            return GetType().GetFields().Length;
+            return GetType().GetProperties().Length;
         }
 
         public void Import(string[] value)
@@ -112,8 +112,8 @@ namespace SwissQR
                 throw new ArgumentException($"Expected {GetFieldCount()} fields but got {value.Length}");
             }
 
-            var _tempName = Name;
             var _tempAddrType = AddrType;
+            var _tempName = Name;
             var _tempStrtNmOrAdrLine1 = StrtNmOrAdrLine1;
             var _tempBldgNbOrAdrLine2 = BldgNbOrAdrLine2;
             var _tempPostCode = PostCode;
@@ -122,8 +122,8 @@ namespace SwissQR
 
             try
             {
-                Name = value[0];
-                AddrType = Enum.Parse<AddressType>(value[1]);
+                AddrType = Enum.Parse<AddressType>(value[0]);
+                Name = value[1];
                 StrtNmOrAdrLine1 = value[2];
                 BldgNbOrAdrLine2 = value[3];
                 PostCode = value[4];
@@ -133,8 +133,8 @@ namespace SwissQR
             }
             catch
             {
-                Name = _tempName;
                 AddrType = _tempAddrType;
+                Name = _tempName;
                 StrtNmOrAdrLine1 = _tempStrtNmOrAdrLine1;
                 BldgNbOrAdrLine2 = _tempBldgNbOrAdrLine2;
                 PostCode = _tempPostCode;

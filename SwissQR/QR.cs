@@ -26,7 +26,7 @@ namespace SwissQR
         public CdtrInf Creditor { get; set; } = new CdtrInf();
 
         [NotNull]
-        public Spacer UltimateCreditor { get; set; } = new Spacer(7);
+        public Spacer UltimateCreditor { get; set; } = new Spacer(7, true);
 
         [NotNull]
         public CcyAmt CurrencyAmount { get; set; } = new CcyAmt();
@@ -97,7 +97,7 @@ namespace SwissQR
                 Creditor.Import(value.Take(Creditor.GetFieldCount()).ToArray());
 
                 value = value.Skip(Creditor.GetFieldCount()).ToArray();
-                UltimateCreditor = new Spacer(7);
+                UltimateCreditor = new Spacer(7, true);
                 UltimateCreditor.Import(value.Take(UltimateCreditor.GetFieldCount()).ToArray());
 
                 value = value.Skip(UltimateCreditor.GetFieldCount()).ToArray();
@@ -120,7 +120,7 @@ namespace SwissQR
                 }
                 if (value.Length > 1)
                 {
-                    AltPmt1 = value[1];
+                    AltPmt2 = value[1];
                 }
 
                 Validate();

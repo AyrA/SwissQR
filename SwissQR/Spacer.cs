@@ -5,15 +5,18 @@ namespace SwissQR
 {
     public class Spacer : IQRTransferrable
     {
-        public int FieldCount;
+        public int FieldCount { get; }
+        public bool ForceEmptyOnImport { get; }
 
-        public Spacer(int fieldCount)
+
+        public Spacer(int fieldCount, bool forceEmptyOnImport)
         {
             if (fieldCount < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(fieldCount));
             }
             FieldCount = fieldCount;
+            ForceEmptyOnImport = forceEmptyOnImport;
         }
 
         public string[] Export()
@@ -39,7 +42,13 @@ namespace SwissQR
             {
                 throw new ArgumentException($"Expected {GetFieldCount()} fields but got {value.Length}");
             }
-            //NOOP
+            if (ForceEmptyOnImport)
+            {
+                if (!value.All(string.IsNullOrEmpty))
+                {
+                    throw new ArgumentException($"{nameof(ForceEmptyOnImport)} is set but at least one value is not null or empty");
+                }
+            }
         }
     }
 }
