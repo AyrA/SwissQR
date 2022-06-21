@@ -1,12 +1,20 @@
-﻿using SwissQR.Validation;
+﻿using QRCoder;
+using SwissQR.Validation;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 
 namespace SwissQR
 {
     public class QR : Validated, IQRTransferrable
     {
+        private const string CRLF = "\r\n";
+        private const string SWISS_CROSS = "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFAQMAAAC3ob" +
+            "SmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAGUExURQAAAP///6XZn90AA" +
+            "AAJcEhZcwAADsMAAA7DAcdvqGQAAAASSURBVBjTY2BgUGAoYFBgYAAAA3oAsZvq6LIA" +
+            "AAAASUVORK5CYII=";
         [NotNull]
         public Header Header { get; private set; } = new Header();
 
@@ -27,7 +35,7 @@ namespace SwissQR
 
         [Length(100)]
         public string AltPmt1 { get; set; }
-        
+
         [Length(100)]
         public string AltPmt2 { get; set; }
 
@@ -125,6 +133,16 @@ namespace SwissQR
                 AltPmt2 = _tempAltPmt2;
                 throw;
             }
+        }
+
+        public Bitmap GetQR()
+        {
+            using QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            using QRCodeData qrCodeData = qrGenerator.CreateQrCode(string.Join(CRLF, Export()), QRCodeGenerator.ECCLevel.M);
+            using QRCode qrCode = new QRCode(qrCodeData);
+            using var IN = new MemoryStream(Convert.FromBase64String(SWISS_CROSS));
+            using var Cross = (Bitmap)Image.FromStream(IN);
+            return qrCode.GetGraphic(20, Color.Black, Color.White, Cross, 15, 2);
         }
     }
 }
