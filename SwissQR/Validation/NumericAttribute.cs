@@ -21,7 +21,7 @@ namespace SwissQR.Validation
             }
             if (value is string s)
             {
-                if (s.Length > 0 && Regex.IsMatch(s, @"^[+\-]?\d*(.\d+)?([eE][+\-]?\d+)?$"))
+                if (s.Length > 0 && Regex.IsMatch(s, REGEX))
                 {
                     return;
                 }

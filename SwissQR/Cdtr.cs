@@ -47,7 +47,7 @@ namespace SwissQR
         /// Two character country code
         /// </summary>
         [NotNull, Length(2, 2)]
-        public string Country { get; set; }
+        public string Country { get; set; } = "CH";
 
         public override void Validate()
         {
@@ -133,6 +133,7 @@ namespace SwissQR
             }
             catch
             {
+                Name = _tempName;
                 AddrType = _tempAddrType;
                 StrtNmOrAdrLine1 = _tempStrtNmOrAdrLine1;
                 BldgNbOrAdrLine2 = _tempBldgNbOrAdrLine2;

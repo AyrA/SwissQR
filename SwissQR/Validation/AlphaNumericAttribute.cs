@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 
 namespace SwissQR.Validation
 {
@@ -9,6 +6,10 @@ namespace SwissQR.Validation
     {
         public override void Validate(object value, string fieldName)
         {
+            if(value is null)
+            {
+                return;
+            }
             if (value is string s)
             {
                 if (!s.All(IsAlphanumeric))

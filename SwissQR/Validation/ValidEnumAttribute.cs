@@ -23,10 +23,12 @@ namespace SwissQR.Validation
                 throw new ValidationException(fieldName, $"'{value}' of type '{T}' is not an enum");
             }
             var Values = Enum.GetValues(T);
+            var numeric = Convert.ToInt64(value);
             var Sum = 0L;
             foreach (var V in Values)
             {
-                if (V == value)
+                var enumNumeric = Convert.ToInt64(V);
+                if (enumNumeric == numeric)
                 {
                     return;
                 }
@@ -34,7 +36,7 @@ namespace SwissQR.Validation
             }
             if (T.CustomAttributes.Any(m => m.AttributeType == typeof(FlagsAttribute)))
             {
-                var numeric = Convert.ToInt64(value);
+                
                 if (numeric != (Sum & numeric))
                 {
                     //Extra flags not in sum

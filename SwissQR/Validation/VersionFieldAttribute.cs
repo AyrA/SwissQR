@@ -21,7 +21,7 @@ namespace SwissQR.Validation
             {
                 throw new ValidationException(fieldName, $"Version cannot contain '{nameof(Version.Revision)}' or '{nameof(Version.Build)}' components");
             }
-            if (Parsed.CompareTo(Version.Parse("2.0.0.0")) != 0)
+            if (Parsed.CompareTo(Version.Parse(Header.CurrentVersion)) != 0)
             {
                 throw new ValidationException(fieldName, "Version 2.0 is the only supported version");
             }

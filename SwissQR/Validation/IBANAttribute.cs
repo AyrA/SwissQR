@@ -25,15 +25,15 @@ namespace SwissQR.Validation
                 }
                 if (!iban.StartsWith("CH") && !iban.StartsWith("LI"))
                 {
-                    throw new ValidationException(fieldName, "Only CH and LI iban supported");
-                }
-                if (iban.Length != 21)
-                {
-                    throw new ValidationException(fieldName, "IBAN must be 21 characters");
+                    throw new ValidationException(fieldName, "Only CH and LI IBAN supported");
                 }
                 if (iban.Any(char.IsWhiteSpace))
                 {
                     throw new ValidationException(fieldName, "IBAN must not contain whitespace");
+                }
+                if (iban.Length != 21)
+                {
+                    throw new ValidationException(fieldName, "IBAN must be 21 characters");
                 }
                 //Format validation
                 if (!Regex.IsMatch(iban, REGEX))
@@ -42,21 +42,17 @@ namespace SwissQR.Validation
                 }
                 //Checksum validation
                 //See: https://en.wikipedia.org/wiki/International_Bank_Account_Number#Validating_the_IBAN
-                int sum = 0;
                 //1. Rearrange IBAN so the first 4 characters are at the end
-                var digits = (iban[4..] + iban[0..3])
+                var digits = (iban[4..] + iban[..4])
                     //2. Replace range A-Z with range 10-36
                     .Select(ToNumber)
                     .ToArray();
                 //3. Treat the IBAN as a long integer and compute modulo 97
-                foreach (var digit in digits)
-                {
-                    sum *= 10;
-                    sum += digit;
-                    sum %= 97;
-                }
+                var bignum = System.Numerics.BigInteger.Parse(string.Concat(digits));
+                var bigresult = (int)(bignum % System.Numerics.BigInteger.Parse("97"));
+
                 //4. Check digit must be 1
-                if (sum != 1)
+                if (bigresult != 1)
                 {
                     throw new ValidationException(fieldName, "IBAN checksum test failed");
                 }

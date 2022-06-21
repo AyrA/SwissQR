@@ -11,7 +11,15 @@
 
         public override void Validate(object value, string fieldName)
         {
-            if (value != Value)
+            if (value == null)
+            {
+                if (Value == null)
+                {
+                    return;
+                }
+                throw new ValidationException(fieldName, $"Value must be '{Value}' but is null");
+            }
+            if (!value.Equals(Value))
             {
                 throw new ValidationException(fieldName, $"Value must be '{Value}' but is '{value}'");
             }

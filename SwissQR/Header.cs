@@ -8,13 +8,13 @@ namespace SwissQR
         public static readonly string CurrentVersion = "2.0";
 
         [ValidEnum]
-        public QRType QRType { get; private set; } = QRType.SPC;
+        public QRType QRType { get; set; } = QRType.SPC;
         
         [VersionField, NotNull]
-        public Version Version { get; private set; } = new Version(CurrentVersion);
+        public Version Version { get; set; } = new Version(CurrentVersion);
         
         [ConstValue('1')]
-        public char Coding { get; private set; } = '1';
+        public char Coding { get; set; } = '1';
 
         public string[] Export()
         {

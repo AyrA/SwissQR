@@ -15,11 +15,15 @@ namespace SwissQR
             "SmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAGUExURQAAAP///6XZn90AA" +
             "AAJcEhZcwAADsMAAA7DAcdvqGQAAAASSURBVBjTY2BgUGAoYFBgYAAAA3oAsZvq6LIA" +
             "AAAASUVORK5CYII=";
+        private const string SWISS_CROSS_RED = "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFAQMAAA" +
+            "C3obSmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAGUExURf8AAP///0EdN" +
+            "BEAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAASSURBVBjTY2BgUGAoYFBgYAAAA3oAsZvq" +
+            "6LIAAAAASUVORK5CYII=";
         [NotNull]
-        public Header Header { get; private set; } = new Header();
+        public Header Header { get; set; } = new Header();
 
         [NotNull]
-        public CdtrInf Creditor { get; private set; } = new CdtrInf();
+        public CdtrInf Creditor { get; set; } = new CdtrInf();
 
         [NotNull]
         public Spacer UltimateCreditor { get; set; } = new Spacer(7);
@@ -135,14 +139,22 @@ namespace SwissQR
             }
         }
 
-        public Bitmap GetQR()
+        public Bitmap GetQR(bool Colored)
         {
             using QRCodeGenerator qrGenerator = new QRCodeGenerator();
             using QRCodeData qrCodeData = qrGenerator.CreateQrCode(string.Join(CRLF, Export()), QRCodeGenerator.ECCLevel.M);
             using QRCode qrCode = new QRCode(qrCodeData);
-            using var IN = new MemoryStream(Convert.FromBase64String(SWISS_CROSS));
+            using var IN = new MemoryStream(Convert.FromBase64String(Colored ? SWISS_CROSS_RED : SWISS_CROSS));
             using var Cross = (Bitmap)Image.FromStream(IN);
-            return qrCode.GetGraphic(20, Color.Black, Color.White, Cross, 15, 2);
+            //Expand the image with super fast crisp drawing
+            using var Scaled = new Bitmap(100, 100);
+            using Graphics G = Graphics.FromImage(Scaled);
+            G.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            G.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+            G.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            G.DrawImage(Cross, 0.0f, 0.0f, 100f, 100f);
+            //Render final code
+            return qrCode.GetGraphic(20, Color.Black, Color.White, Scaled, 15, 20, true);
         }
     }
 }
