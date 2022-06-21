@@ -10,10 +10,11 @@ namespace SwissQR.Validation
         /// Fields and properties to validate
         /// </summary>
         /// <remarks>
-        /// Remove <see cref="BindingFlags.NonPublic"/>
-        /// to not validate private fields
+        /// Add <see cref="BindingFlags.NonPublic"/>
+        /// to also validate private fields.
+        /// Note that this will validate public properties twice
         /// </remarks>
-        const BindingFlags Flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
+        const BindingFlags Flags = BindingFlags.Public | BindingFlags.Instance;
 
         public virtual void Validate()
         {
