@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32602.291
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwissQR", "SwissQR\SwissQR.csproj", "{0666C02C-30A6-48EB-9484-1B794CC83146}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwissQR", "SwissQR\SwissQR.csproj", "{0666C02C-30A6-48EB-9484-1B794CC83146}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example", "Example\Example.csproj", "{6A48DB4D-0720-461C-95B4-1F7149A4BE52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{0666C02C-30A6-48EB-9484-1B794CC83146}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0666C02C-30A6-48EB-9484-1B794CC83146}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0666C02C-30A6-48EB-9484-1B794CC83146}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A48DB4D-0720-461C-95B4-1F7149A4BE52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A48DB4D-0720-461C-95B4-1F7149A4BE52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A48DB4D-0720-461C-95B4-1F7149A4BE52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A48DB4D-0720-461C-95B4-1F7149A4BE52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
