@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>2022 Kevin Gut</Copyright>
+    <Description>Generate fully validated QR code for new swiss billing system</Description>
+    <RepositoryUrl>https://github.com/AyrA/SwissQR</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Authors>Kevin Gut</Authors>
+    <PackageProjectUrl>https://github.com/AyrA/SwissQR</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
